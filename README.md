@@ -1,6 +1,6 @@
-## Food Truck Project
+## Jets Project
 
-### Week 4 Homework - Jets
+### Week 4 Homework - Skill Distillery
 
 #### Overview
 
