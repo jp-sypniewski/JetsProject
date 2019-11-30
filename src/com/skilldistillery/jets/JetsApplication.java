@@ -64,18 +64,20 @@ public class JetsApplication {
 			} else if (choice == 2) {
 				flyAllJets(jetsAirField);
 			} else if (choice == 3) {
-				viewFastestJet(jetsAirField);
+				flyOneJet(jetsAirField, kb);
 			} else if (choice == 4) {
-				viewRangiestJet(jetsAirField);
+				viewFastestJet(jetsAirField);
 			} else if (choice == 5) {
-				loadAllCargoPlanes(jetsAirField);
+				viewRangiestJet(jetsAirField);
 			} else if (choice == 6) {
-				// dogfight
+				loadAllCargoPlanes(jetsAirField);
 			} else if (choice == 7) {
-				addNewJet(jetsAirField, kb);
+				// dogfight
 			} else if (choice == 8) {
-				removeJet(jetsAirField, kb);
+				addNewJet(jetsAirField, kb);
 			} else if (choice == 9) {
+				removeJet(jetsAirField, kb);
+			} else if (choice == 10) {
 				System.out.println("Thanks for using the Jets Application.  Good day!");
 				kb.close();
 				break;
@@ -90,13 +92,14 @@ public class JetsApplication {
 		System.out.println("Please select an integer option:");
 		System.out.println("1: List fleet");
 		System.out.println("2: Fly all jets");
-		System.out.println("3: View fastest jet");
-		System.out.println("4: View jet with longest range");
-		System.out.println("5: Load all Cargo jets");
-		System.out.println("6: Dogfight!");
-		System.out.println("7: Add a jet to a Fleet");
-		System.out.println("8: Remove a jet from Fleet");
-		System.out.println("9: Quit");
+		System.out.println("3: Fly one jet");
+		System.out.println("4: View fastest jet");
+		System.out.println("5: View jet with longest range");
+		System.out.println("6: Load all Cargo jets");
+		System.out.println("7: Dogfight!");
+		System.out.println("8: Add a jet to a Fleet");
+		System.out.println("9: Remove a jet from Fleet");
+		System.out.println("10: Quit");
 	}
 
 	public void listFleet(AirField af) {
@@ -116,6 +119,18 @@ public class JetsApplication {
 			afJets.get(i).fly();
 			System.out.println("----------");
 		}
+	}
+	
+	public void flyOneJet(AirField af, Scanner kb) {
+		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
+		kb.nextLine();
+		System.out.println("Please select the index of the jet you would like to fly, starting at zero: ");
+		int __flyOneJet__ = kb.nextInt();
+		System.out.println("----------");
+		System.out.println(af.getJets().get(__flyOneJet__));
+		af.getJets().get(__flyOneJet__).fly();
+		System.out.println("----------");
+		
 	}
 	
 	public void viewFastestJet(AirField af) {
