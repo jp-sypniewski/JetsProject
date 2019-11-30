@@ -73,9 +73,8 @@ public class JetsApplication {
 				// dogfight
 			} else if (choice == 7) {
 				addNewJet(jetsAirField, kb);
-				// add new jet
 			} else if (choice == 8) {
-				// remove a jet from fleet
+				removeJet(jetsAirField, kb);
 			} else if (choice == 9) {
 				System.out.println("Thanks for using the Jets Application.  Good day!");
 				kb.close();
@@ -162,7 +161,7 @@ public class JetsApplication {
 	}
 	
 	public void addNewJet(AirField af, Scanner kb) {
-		System.out.println("The airfield current holds " + af.getJets().size() + " jets.");
+		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 		kb.nextLine();
 		
 		System.out.print("Please enter new jet model (String): ");
@@ -180,8 +179,23 @@ public class JetsApplication {
 		JetImpl __jet__ = new JetImpl(__name__, __speed__, __range__, __price__);
 		af.putJetInAirfield(__jet__);
 		
-		System.out.println("The airfield current holds " + af.getJets().size() + " jets.");
+		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 
+	}
+	
+	public void removeJet(AirField af, Scanner kb) {
+		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
+		kb.nextLine();
+		System.out.println("Please select the index of the place at which you would like to remove a jet, starting at zero: ");
+		int __removeIndex__ = kb.nextInt();
+		try {
+			Jet __removedJet__ = af.getJets().remove(__removeIndex__);
+			System.out.println(__removedJet__);
+			System.out.println("Removed from service!");
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Index out of bounds!  There's no jet there...");
+			return;
+		}
 	}
 
 }
