@@ -4,18 +4,22 @@
 
 #### Overview
 
-TBD
+The Jets project uses the JetsApplication to take in a .txt file of Jets (as csv), then presents the user with functionality to:
+- list all jets in the 'airfield'
+- 'fly' all the jets
+- view the fastest jet or the jet with the longest range
+- load all cargo jets
+- add or remove a jet in the airfield
 
 #### Concepts
 
-- (copied from Food Truck) Creating objects and manipulating the data retrieved from objects
-- Getter methods for private fields within an object
-- For loop with break for limited user input
-- Infinite while loop with break when user quits program
+- Creating objects from a .txt file through FileReader and BufferedReader
+- Creating different objects that descend from an abstract superclass
+- Utilizing interfaces that differ by specific type of object
 
 #### Technologies Used
 
-- (Copied from Food Truck) Java
+- Java
 
 #### Lessons Learned
 
