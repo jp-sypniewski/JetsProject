@@ -8,7 +8,7 @@
 
 The Jets project uses the JetsApplication to take in a .txt file of Jets (as csv), then presents the user with functionality to:
 - list all jets in the airfield
-- fly all the jets
+- fly all the jets, or one jet as selected by the user
 - view the fastest jet or the jet with the longest range
 - load all cargo jets
 - add or remove a jet in the airfield

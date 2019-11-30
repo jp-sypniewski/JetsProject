@@ -32,8 +32,8 @@ public class JetsApplication {
 				double speedHolder = Double.parseDouble(lineSplit[1]);
 				int rangeHolder = Integer.parseInt(lineSplit[2]);
 				long priceHolder = Long.parseLong(lineSplit[3]);
-				
-				//adding jets with evens as fighter, odds as cargo **note .txt file starts at 1
+
+				// adding jets with evens as fighter, odds as cargo **note .txt file starts at 1
 				Jet holderJet;
 				if (jetInitializer % 2 == 0) {
 					holderJet = new FighterJet(lineSplit[0], speedHolder, rangeHolder, priceHolder);
@@ -72,7 +72,7 @@ public class JetsApplication {
 			} else if (choice == 6) {
 				loadAllCargoPlanes(jetsAirField);
 			} else if (choice == 7) {
-				// dogfight
+				dogfightAllFighterJets(jetsAirField);
 			} else if (choice == 8) {
 				addNewJet(jetsAirField, kb);
 			} else if (choice == 9) {
@@ -82,7 +82,7 @@ public class JetsApplication {
 				kb.close();
 				break;
 			} else {
-				System.out.println("Option not listed, please select an integer 1 through 9.");
+				System.out.println("Option not listed, please select an integer 1 through 10.");
 			}
 		}
 
@@ -111,6 +111,7 @@ public class JetsApplication {
 
 		}
 	}
+
 	public void flyAllJets(AirField af) {
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		for (int i = 0; i < afJets.size(); i++) {
@@ -120,19 +121,23 @@ public class JetsApplication {
 			System.out.println("----------");
 		}
 	}
-	
+
 	public void flyOneJet(AirField af, Scanner kb) {
 		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 		kb.nextLine();
 		System.out.println("Please select the index of the jet you would like to fly, starting at zero: ");
 		int __flyOneJet__ = kb.nextInt();
-		System.out.println("----------");
-		System.out.println(af.getJets().get(__flyOneJet__));
-		af.getJets().get(__flyOneJet__).fly();
-		System.out.println("----------");
-		
+		try {
+			System.out.println("----------");
+			System.out.println(af.getJets().get(__flyOneJet__));
+			af.getJets().get(__flyOneJet__).fly();
+			System.out.println("----------");
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Index out of bounds!  There's no jet there...");
+		}
+
 	}
-	
+
 	public void viewFastestJet(AirField af) {
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		if (afJets.size() == 0) {
@@ -148,7 +153,7 @@ public class JetsApplication {
 		System.out.println("The fastest jet is: ");
 		System.out.println(fastestJet);
 	}
-	
+
 	public void viewRangiestJet(AirField af) {
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		if (afJets.size() == 0) {
@@ -164,7 +169,7 @@ public class JetsApplication {
 		System.out.println("The rangiest jet is: ");
 		System.out.println(rangiestJet);
 	}
-	
+
 	public void loadAllCargoPlanes(AirField af) {
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		for (int i = 0; i < afJets.size(); i++) {
@@ -174,34 +179,63 @@ public class JetsApplication {
 			}
 		}
 	}
-	
+
+	public void dogfightAllFighterJets(AirField af) {
+		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
+		for (int i = 0; i < afJets.size(); i++) {
+			if (afJets.get(i) instanceof FighterJet) {
+				FighterJet fighter = (FighterJet) afJets.get(i);
+				fighter.fight();
+			}
+		}
+	}
+
 	public void addNewJet(AirField af, Scanner kb) {
 		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 		kb.nextLine();
+
+		System.out.println("Would you like to enter a fighter jet or a cargo jet?");
+		System.out.println("Enter an integer for your choice\tFighter (0)\tCargo(1)");
+		int __jetType__ = kb.nextInt();
+
+		if (!(__jetType__ == 0 || __jetType__ == 1)) {
+			System.out.println("Jets Application does not handle those types of jets.");
+			return;
+		}
 		
+		kb.nextLine();
+
 		System.out.print("Please enter new jet model (String): ");
 		String __name__ = kb.nextLine();
-		
+
 		System.out.print("Please enter new jet speed (double): ");
 		double __speed__ = kb.nextDouble();
-		
+
 		System.out.print("Please enter new jet range (int): ");
 		int __range__ = kb.nextInt();
-		
+
 		System.out.print("Please enter new jet price (long): ");
 		long __price__ = kb.nextLong();
-		
-		JetImpl __jet__ = new JetImpl(__name__, __speed__, __range__, __price__);
-		af.putJetInAirfield(__jet__);
-		
+
+		Jet __jet__;
+
+		if (__jetType__ == 0) {
+			__jet__ = new FighterJet(__name__, __speed__, __range__, __price__);
+			af.putJetInAirfield(__jet__);
+		} else if (__jetType__ == 1) {
+			__jet__ = new CargoPlane(__name__, __speed__, __range__, __price__);
+			af.putJetInAirfield(__jet__);
+		}
+
 		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 
 	}
-	
+
 	public void removeJet(AirField af, Scanner kb) {
 		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
 		kb.nextLine();
-		System.out.println("Please select the index of the place at which you would like to remove a jet, starting at zero: ");
+		System.out.println(
+				"Please select the index of the place at which you would like to remove a jet, starting at zero: ");
 		int __removeIndex__ = kb.nextInt();
 		try {
 			Jet __removedJet__ = af.getJets().remove(__removeIndex__);
