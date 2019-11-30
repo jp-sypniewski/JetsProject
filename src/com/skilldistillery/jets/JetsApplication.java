@@ -26,15 +26,23 @@ public class JetsApplication {
 		try (BufferedReader in = new BufferedReader(new FileReader("jets.txt"))) {
 
 			String line = null;
+			int jetInitializer = 0;
 			while ((line = in.readLine()) != null) {
 				String[] lineSplit = line.split(",");
 				double speedHolder = Double.parseDouble(lineSplit[1]);
 				int rangeHolder = Integer.parseInt(lineSplit[2]);
 				long priceHolder = Long.parseLong(lineSplit[3]);
-
-				Jet holderJet = new FighterJet(lineSplit[0], speedHolder, rangeHolder, priceHolder);
+				
+				//adding jets with evens as fighter, odds as cargo **note .txt file starts at 1
+				Jet holderJet;
+				if (jetInitializer % 2 == 0) {
+					holderJet = new FighterJet(lineSplit[0], speedHolder, rangeHolder, priceHolder);
+				} else {
+					holderJet = new CargoPlane(lineSplit[0], speedHolder, rangeHolder, priceHolder);
+				}
 
 				jetsAirField.putJetInAirfield(holderJet);
+				jetInitializer++;
 			}
 		} catch (IOException e) {
 			System.err.println(e);
@@ -60,6 +68,7 @@ public class JetsApplication {
 			} else if (choice == 4) {
 				viewRangiestJet(jetsAirField);
 			} else if (choice == 5) {
+				loadAllCargoPlanes(jetsAirField);
 				// load all cargo jets
 			} else if (choice == 6) {
 				// dogfight
@@ -140,6 +149,16 @@ public class JetsApplication {
 		}
 		System.out.println("The rangiest jet is: ");
 		System.out.println(rangiestJet);
+	}
+	
+	public void loadAllCargoPlanes(AirField af) {
+		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
+		for (int i = 0; i < afJets.size(); i++) {
+			if (afJets.get(i) instanceof CargoPlane) {
+				CargoPlane cargo = (CargoPlane) afJets.get(i);
+				cargo.loadCargo();
+			}
+		}
 	}
 
 }
