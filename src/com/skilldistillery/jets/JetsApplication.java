@@ -232,11 +232,14 @@ public class JetsApplication {
 	}
 
 	public void removeJet(AirField af, Scanner kb) {
-		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
+		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
+		System.out.println("Please select a jet to remove");
+		for (int i = 0; i < afJets.size(); i++) {
+			System.out.println((i+1) + ": " + afJets.get(i).getModel());
+		}
 		kb.nextLine();
-		System.out.println(
-				"Please select the index of the place at which you would like to remove a jet, starting at zero: ");
-		int __removeIndex__ = kb.nextInt();
+
+		int __removeIndex__ = (kb.nextInt()-1);
 		try {
 			Jet __removedJet__ = af.getJets().remove(__removeIndex__);
 			System.out.println(__removedJet__);
