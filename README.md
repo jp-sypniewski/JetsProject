@@ -15,7 +15,8 @@ The Jets project uses the JetsApplication to take in a .txt file of Jets (as csv
 
 - Creating objects from a .txt file through FileReader and BufferedReader
 - Creating different objects that descend from an abstract superclass
-- Utilizing interfaces that differ by specific type of object
+- Utilizing interfaces that differ by specific type of object, requiring 'instanceof' check to confirm before casting the object and calling methods
+- Adding/removing objects from an ArrayList
 
 #### Technologies Used
 
@@ -23,11 +24,10 @@ The Jets project uses the JetsApplication to take in a .txt file of Jets (as csv
 
 #### Lessons Learned
 
-- (Copied from Food Truck) Readability of code - everything for this project can be kept inside a main, but refactoring into methods provides drastically increased readability.
-- Array sizing issues - since the user can input 5 or less trucks, the initial array is created to hold the maximum number of FoodTruck objects.  When calling methods to iterate over the array, the loop iterates until the count of objects actually entered rather than the entire array.
-- Object instatiation from user input - the FoodTruck object requires three pieces of input from the user.  This program holds the user input in local variables until all input for an object in collected, then the object is instatiated.  Alternatively, the object could be instatiated prior to user input with an empty constructor.  This would require setters as the fields within FoodTruck are set to private.
+- Readability of code - everything for this project can be kept inside a main, but refactoring into methods provides drastically increased readability.
+- 'instanceof' - allows for a confirmation of 'is-a' class-type in a much more readable format than e.g. ArrayList.Object.getClass.getSimpleName.equals("ClassName")
+
 
 #### Potential Updates
 
-- (Copied from Food Truck) Open project to more food establishment types than food trucks through utilization of superclasses.
-- Defined interface for FoodTruckApp class would allow for development of other establishment-rating classes.
+- interface for the application
