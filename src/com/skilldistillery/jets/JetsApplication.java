@@ -33,7 +33,8 @@ public class JetsApplication {
 				int rangeHolder = Integer.parseInt(lineSplit[2]);
 				long priceHolder = Long.parseLong(lineSplit[3]);
 
-				// adding jets with evens as fighter, odds as cargo **note .txt file starts at 1
+				// adding jets with evens as fighter, odds as cargo *note models of 'test jets'
+				// start at jet1
 				Jet holderJet;
 				if (jetInitializer % 2 == 0) {
 					holderJet = new FighterJet(lineSplit[0], speedHolder, rangeHolder, priceHolder);
@@ -49,6 +50,25 @@ public class JetsApplication {
 			System.exit(1);
 		}
 
+		try (BufferedReader in = new BufferedReader(new FileReader("pilots.txt"))) {
+
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				String[] lineSplit = line.split(",");
+				int __years__ = Integer.parseInt(lineSplit[2]);
+
+				Pilot pilot = new Pilot(lineSplit[0], lineSplit[1], __years__, lineSplit[3]);
+
+				jetsAirField.addPilotToAirfield(pilot);
+
+			}
+		} catch (IOException e) {
+			System.err.println(e);
+			System.exit(1);
+		}
+
+		jetsAirField.assignPilotsToJets();
+
 		Scanner kb = new Scanner(System.in);
 		int choice = 0;
 
@@ -56,11 +76,7 @@ public class JetsApplication {
 			printMenu();
 			choice = kb.nextInt();
 			if (choice == 1) {
-
-				// TODO update Jet toString(), currently have brackets around whole toString and
-				// it doesn't look pretty
 				listFleet(jetsAirField);
-
 			} else if (choice == 2) {
 				flyAllJets(jetsAirField);
 			} else if (choice == 3) {
@@ -202,7 +218,7 @@ public class JetsApplication {
 			System.out.println("Jets Application does not handle those types of jets.");
 			return;
 		}
-		
+
 		kb.nextLine();
 
 		System.out.print("Please enter new jet model (String): ");
@@ -235,11 +251,11 @@ public class JetsApplication {
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		System.out.println("Please select a jet to remove");
 		for (int i = 0; i < afJets.size(); i++) {
-			System.out.println((i+1) + ": " + afJets.get(i).getModel());
+			System.out.println((i + 1) + ": " + afJets.get(i).getModel());
 		}
 		kb.nextLine();
 
-		int __removeIndex__ = (kb.nextInt()-1);
+		int __removeIndex__ = (kb.nextInt() - 1);
 		try {
 			Jet __removedJet__ = af.getJets().remove(__removeIndex__);
 			System.out.println(__removedJet__);
@@ -248,6 +264,7 @@ public class JetsApplication {
 			System.out.println("Index out of bounds!  There's no jet there...");
 			return;
 		}
+		af.assignPilotsToJets();
 	}
 
 }
