@@ -69,10 +69,10 @@ public class JetsApplication {
 				viewRangiestJet(jetsAirField);
 			} else if (choice == 5) {
 				loadAllCargoPlanes(jetsAirField);
-				// load all cargo jets
 			} else if (choice == 6) {
 				// dogfight
 			} else if (choice == 7) {
+				addNewJet(jetsAirField, kb);
 				// add new jet
 			} else if (choice == 8) {
 				// remove a jet from fleet
@@ -159,6 +159,29 @@ public class JetsApplication {
 				cargo.loadCargo();
 			}
 		}
+	}
+	
+	public void addNewJet(AirField af, Scanner kb) {
+		System.out.println("The airfield current holds " + af.getJets().size() + " jets.");
+		kb.nextLine();
+		
+		System.out.print("Please enter new jet model (String): ");
+		String __name__ = kb.nextLine();
+		
+		System.out.print("Please enter new jet speed (double): ");
+		double __speed__ = kb.nextDouble();
+		
+		System.out.print("Please enter new jet range (int): ");
+		int __range__ = kb.nextInt();
+		
+		System.out.print("Please enter new jet price (long): ");
+		long __price__ = kb.nextLong();
+		
+		JetImpl __jet__ = new JetImpl(__name__, __speed__, __range__, __price__);
+		af.putJetInAirfield(__jet__);
+		
+		System.out.println("The airfield current holds " + af.getJets().size() + " jets.");
+
 	}
 
 }

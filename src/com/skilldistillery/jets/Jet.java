@@ -26,7 +26,7 @@ public abstract class Jet {
 
 	@Override
 	public String toString() {
-		return "Jet \nModel: " + model + "\nSpeed: " + speed + "\nRange:" + range + "\nPrice: " + price;
+		return "Jet \nModel: " + model + "\nSpeed: " + speed + "\nRange: " + range + "\nPrice: " + price;
 	}
 
 	public String getModel() {
