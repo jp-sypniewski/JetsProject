@@ -23,49 +23,9 @@ public class JetsApplication {
 		AirField jetsAirField = new AirField();
 		jetsAirField.initializeAirField();
 
-		try (BufferedReader in = new BufferedReader(new FileReader("jets.txt"))) {
+		importJetsTxtFile(jetsAirField);
 
-			String line = null;
-			int jetInitializer = 0;
-			while ((line = in.readLine()) != null) {
-				String[] lineSplit = line.split(",");
-				double speedHolder = Double.parseDouble(lineSplit[1]);
-				int rangeHolder = Integer.parseInt(lineSplit[2]);
-				long priceHolder = Long.parseLong(lineSplit[3]);
-
-				// adding jets with evens as fighter, odds as cargo *note models of 'test jets'
-				// start at jet1
-				Jet holderJet;
-				if (jetInitializer % 2 == 0) {
-					holderJet = new FighterJet(lineSplit[0], speedHolder, rangeHolder, priceHolder);
-				} else {
-					holderJet = new CargoPlane(lineSplit[0], speedHolder, rangeHolder, priceHolder);
-				}
-
-				jetsAirField.putJetInAirfield(holderJet);
-				jetInitializer++;
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		}
-
-		try (BufferedReader in = new BufferedReader(new FileReader("pilots.txt"))) {
-
-			String line = null;
-			while ((line = in.readLine()) != null) {
-				String[] lineSplit = line.split(",");
-				int __years__ = Integer.parseInt(lineSplit[2]);
-
-				Pilot pilot = new Pilot(lineSplit[0], lineSplit[1], __years__, lineSplit[3]);
-
-				jetsAirField.addPilotToAirfield(pilot);
-
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-			System.exit(1);
-		}
+		importPilotsTxtFile(jetsAirField);
 
 		jetsAirField.assignPilotsToJets();
 
@@ -80,11 +40,11 @@ public class JetsApplication {
 			} else if (choice == 2) {
 				flyAllJets(jetsAirField);
 			} else if (choice == 3) {
-				flyOneJet(jetsAirField, kb);
-			} else if (choice == 4) {
 				viewFastestJet(jetsAirField);
-			} else if (choice == 5) {
+			} else if (choice == 4) {
 				viewRangiestJet(jetsAirField);
+			} else if (choice == 5) {
+				flyOneJet(jetsAirField, kb);
 			} else if (choice == 6) {
 				loadAllCargoPlanes(jetsAirField);
 			} else if (choice == 7) {
@@ -104,13 +64,65 @@ public class JetsApplication {
 
 	}
 
+	public void importJetsTxtFile(AirField af) {
+		try (BufferedReader in = new BufferedReader(new FileReader("jets.txt"))) {
+
+			String line = null;
+			int jetTypeSplitter = 0;
+			while ((line = in.readLine()) != null) {
+				String[] lineSplit = line.split(",");
+				// lineSplit[0] <- model
+				double speed = Double.parseDouble(lineSplit[1]);
+				int range = Integer.parseInt(lineSplit[2]);
+				long price = Long.parseLong(lineSplit[3]);
+
+				// adding jets with evens as fighter, odds as cargo *note models of 'test jets'
+				// 		start at jet1
+				Jet holderJet;
+				if (jetTypeSplitter % 2 == 0) {
+					holderJet = new FighterJet(lineSplit[0], speed, range, price);
+				} else {
+					holderJet = new CargoPlane(lineSplit[0], speed, range, price);
+				}
+
+				af.putJetInAirfield(holderJet);
+				jetTypeSplitter++;
+			}
+		} catch (IOException e) {
+			System.err.println(e);
+			System.exit(1);
+		}
+	}
+
+	public void importPilotsTxtFile(AirField af) {
+		try (BufferedReader in = new BufferedReader(new FileReader("pilots.txt"))) {
+
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				String[] lineSplit = line.split(",");
+				// lineSplit[0] <- firstName
+				// lineSplit[1] <- lastName
+				int __years__ = Integer.parseInt(lineSplit[2]);
+				// lineSplit[3] <- catchPhrase
+
+				Pilot pilot = new Pilot(lineSplit[0], lineSplit[1], __years__, lineSplit[3]);
+
+				af.addPilotToAirfield(pilot);
+
+			}
+		} catch (IOException e) {
+			System.err.println(e);
+			System.exit(1);
+		}
+	}
+
 	public void printMenu() {
 		System.out.println("Please select an integer option:");
 		System.out.println("1: List fleet");
 		System.out.println("2: Fly all jets");
-		System.out.println("3: Fly one jet");
-		System.out.println("4: View fastest jet");
-		System.out.println("5: View jet with longest range");
+		System.out.println("3: View fastest jet");
+		System.out.println("4: View jet with longest range");
+		System.out.println("5: Fly one jet");
 		System.out.println("6: Load all Cargo jets");
 		System.out.println("7: Dogfight!");
 		System.out.println("8: Add a jet to a Fleet");
@@ -140,15 +152,14 @@ public class JetsApplication {
 
 	public void flyOneJet(AirField af, Scanner kb) {
 
-		
 		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
 		System.out.println("Please select a jet to fly");
 		for (int i = 0; i < afJets.size(); i++) {
 			System.out.println((i + 1) + ": " + afJets.get(i).getModel());
 		}
 		kb.nextLine();
-		
-		int __flyOneJet__ = (kb.nextInt()-1);
+
+		int __flyOneJet__ = (kb.nextInt() - 1);
 		try {
 			System.out.println("----------");
 			System.out.println(af.getJets().get(__flyOneJet__));
