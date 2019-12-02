@@ -78,14 +78,14 @@ public class JetsApplication {
 
 				// adding jets with evens as fighter, odds as cargo *note models of 'test jets'
 				// 		start at jet1
-				Jet holderJet;
+				Jet jet;
 				if (jetTypeSplitter % 2 == 0) {
-					holderJet = new FighterJet(lineSplit[0], speed, range, price);
+					jet = new FighterJet(lineSplit[0], speed, range, price);
 				} else {
-					holderJet = new CargoPlane(lineSplit[0], speed, range, price);
+					jet = new CargoPlane(lineSplit[0], speed, range, price);
 				}
 
-				af.putJetInAirfield(holderJet);
+				af.putJetInAirfield(jet);
 				jetTypeSplitter++;
 			}
 		} catch (IOException e) {
@@ -102,10 +102,10 @@ public class JetsApplication {
 				String[] lineSplit = line.split(",");
 				// lineSplit[0] <- firstName
 				// lineSplit[1] <- lastName
-				int __years__ = Integer.parseInt(lineSplit[2]);
+				int years = Integer.parseInt(lineSplit[2]);
 				// lineSplit[3] <- catchPhrase
 
-				Pilot pilot = new Pilot(lineSplit[0], lineSplit[1], __years__, lineSplit[3]);
+				Pilot pilot = new Pilot(lineSplit[0], lineSplit[1], years, lineSplit[3]);
 
 				af.addPilotToAirfield(pilot);
 
@@ -159,11 +159,11 @@ public class JetsApplication {
 		}
 		kb.nextLine();
 
-		int __flyOneJet__ = (kb.nextInt() - 1);
+		int flyOneJet = (kb.nextInt() - 1);
 		try {
 			System.out.println("----------");
-			System.out.println(af.getJets().get(__flyOneJet__));
-			af.getJets().get(__flyOneJet__).fly();
+			System.out.println(af.getJets().get(flyOneJet));
+			af.getJets().get(flyOneJet).fly();
 			System.out.println("----------");
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Index out of bounds!  There's no jet there...");
@@ -229,9 +229,9 @@ public class JetsApplication {
 
 		System.out.println("Would you like to enter a fighter jet or a cargo jet?");
 		System.out.println("Enter an integer for your choice\tFighter (0)\tCargo(1)");
-		int __jetType__ = kb.nextInt();
+		int jetType = kb.nextInt();
 
-		if (!(__jetType__ == 0 || __jetType__ == 1)) {
+		if (!(jetType == 0 || jetType == 1)) {
 			System.out.println("Jets Application does not handle those types of jets.");
 			return;
 		}
@@ -239,25 +239,25 @@ public class JetsApplication {
 		kb.nextLine();
 
 		System.out.print("Please enter new jet model (String): ");
-		String __name__ = kb.nextLine();
+		String name = kb.nextLine();
 
 		System.out.print("Please enter new jet speed (double): ");
-		double __speed__ = kb.nextDouble();
+		double speed = kb.nextDouble();
 
 		System.out.print("Please enter new jet range (int): ");
-		int __range__ = kb.nextInt();
+		int range = kb.nextInt();
 
 		System.out.print("Please enter new jet price (long): ");
-		long __price__ = kb.nextLong();
+		long price = kb.nextLong();
 
-		Jet __jet__;
+		Jet jet;
 
-		if (__jetType__ == 0) {
-			__jet__ = new FighterJet(__name__, __speed__, __range__, __price__);
-			af.putJetInAirfield(__jet__);
-		} else if (__jetType__ == 1) {
-			__jet__ = new CargoPlane(__name__, __speed__, __range__, __price__);
-			af.putJetInAirfield(__jet__);
+		if (jetType == 0) {
+			jet = new FighterJet(name, speed, range, price);
+			af.putJetInAirfield(jet);
+		} else if (jetType == 1) {
+			jet = new CargoPlane(name, speed, range, price);
+			af.putJetInAirfield(jet);
 		}
 
 		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
@@ -272,10 +272,10 @@ public class JetsApplication {
 		}
 		kb.nextLine();
 
-		int __removeIndex__ = (kb.nextInt() - 1);
+		int removeIndex = (kb.nextInt() - 1);
 		try {
-			Jet __removedJet__ = af.getJets().remove(__removeIndex__);
-			System.out.println(__removedJet__);
+			Jet removedJet = af.getJets().remove(removeIndex);
+			System.out.println(removedJet);
 			System.out.println("Removed from service!");
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Index out of bounds!  There's no jet there...");
