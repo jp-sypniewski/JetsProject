@@ -139,10 +139,16 @@ public class JetsApplication {
 	}
 
 	public void flyOneJet(AirField af, Scanner kb) {
-		System.out.println("The airfield currently holds " + af.getJets().size() + " jets.");
+
+		
+		ArrayList<Jet> afJets = (ArrayList<Jet>) af.getJets();
+		System.out.println("Please select a jet to fly");
+		for (int i = 0; i < afJets.size(); i++) {
+			System.out.println((i + 1) + ": " + afJets.get(i).getModel());
+		}
 		kb.nextLine();
-		System.out.println("Please select the index of the jet you would like to fly, starting at zero: ");
-		int __flyOneJet__ = kb.nextInt();
+		
+		int __flyOneJet__ = (kb.nextInt()-1);
 		try {
 			System.out.println("----------");
 			System.out.println(af.getJets().get(__flyOneJet__));

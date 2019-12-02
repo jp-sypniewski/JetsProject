@@ -45,6 +45,7 @@ public class AirField {
 				jets.get(i).setPilot(pilot);
 			} catch (IndexOutOfBoundsException e) {
 				System.out.println("It appears we have too many pilots...");
+				break;
 			}
 			i++;
 		}
