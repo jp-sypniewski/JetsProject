@@ -8,10 +8,21 @@ public class CargoPlane extends Jet implements CargoCarrier {
 
 	@Override
 	public void loadCargo() {
-		// TODO Auto-generated method stub
-		System.out.println("Cargo loaded for: " + this.getModel());
+		System.out.println(randomWeirdCargo() + " loaded onto: " + this.getModel());
 		
 		
+	}
+	
+	public String randomWeirdCargo() {
+		int rand = (int)(Math.random()*3);
+		if (rand == 0) {
+			return "Nuclear waste";
+		} else if (rand == 1) {
+			return "Food supplies";
+		} else if (rand == 2) {
+			return "Itty bitty tiny rocket ship toys";
+		}
+		return "Some weird cargo";
 	}
 
 }
