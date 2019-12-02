@@ -4,14 +4,14 @@
 
 #### Overview
 
-The Jets project uses the JetsApplication to take in a txt files of Jets and Pilots (as csv), then presents the user with functionality to:
+The Jets project uses the JetsApplication to take in txt files of jets and pilots (as csv), then presents the user with functionality to:
 - list all jets in the airfield
 - fly all the jets, or one jet as selected by the user
 - view the fastest jet or the jet with the longest range
 - load all cargo jets, 'dogfight' all fighter jets
 - add or remove a jet in the airfield
 
-Once initialized from the txt files, the project iterates over the pilots set to assign a pilot to a jet, with pilot as a private field in a Jet object.  If a jet has a pilot, the pilot's information is listed with the jet's information and is displayed when the jet flies.
+Once initialized from the txt files, the project iterates over the pilots set to assign a pilot to a jet, with pilot as a field in a Jet object.  If a jet has a pilot, the pilot's information is listed with the jet's information and is displayed when the jet flies.
 
 #### Concepts
 
